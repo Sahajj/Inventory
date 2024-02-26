@@ -4,16 +4,13 @@
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "skipLibCheck": true,
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
+    "skipLibCheck": false, // Set to false to enable type checking of declaration files
+    "moduleResolution": "node", // Change to "node" for node.js environment
     "allowSyntheticDefaultImports": true,
-    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
+    "noEmit": false, // Set to false to emit output files
+    "jsx": "react", // Change to "react" if using React
 
     /* Linting */
     "strict": true,

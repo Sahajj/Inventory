@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import MenuAppBar from '../Components/AppBar';
 
 const ProductDashboard: React.FC = () => {

@@ -1,6 +1,5 @@
-import { useState } from "react";
 import LongMenu from './DotButton'
-
+import * as React from 'react';
 interface List {
     id: number,
     name: string,
@@ -178,3 +177,4 @@ function Shop({ shopList }: { shopList: List }) {
         </div>
     );
 }
+

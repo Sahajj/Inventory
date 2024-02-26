@@ -29,7 +29,7 @@ export default function ButtonAppBar({ value, value2 }: ButtonAppBarProps) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {value}
           </Typography>
-          <Button color="inherit">{value2}</Button>
+          <Button color="inherit">{value2} </Button>
         </Toolbar>
       </AppBar>
     </Box>
