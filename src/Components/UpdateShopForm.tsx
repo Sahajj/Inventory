@@ -16,7 +16,7 @@ const theme = createTheme({
 })
 
 interface Address {
-    Country: string;
+    country: string;
     states: string[];
     cities: { [state: string]: string[] };
     postalCode?: number;
@@ -25,7 +25,7 @@ interface Address {
 
 const countries: Address[] = [
     {
-        Country: "USA",
+        country: "USA",
         states: ["New York", "California", "Texas"],
         cities: {
             "New York": ["New York City", "Buffalo"],
@@ -34,7 +34,7 @@ const countries: Address[] = [
         }
     },
     {
-        Country: "India",
+        country: "India",
         states: ["Delhi", "Maharashtra", "Karnataka"],
         cities: {
             "Delhi": ["New Delhi"],
@@ -43,7 +43,7 @@ const countries: Address[] = [
         }
     },
     {
-        Country: "Germany",
+        country: "Germany",
         states: ["Berlin", "Munich", "Frankfurt"],
         cities: {
             "Berlin": ["Berlin City"],
@@ -56,28 +56,16 @@ const countries: Address[] = [
 
 
 interface AddItemFromProps {
-    onAdd: (item: List) => void;
+    onUpdate: (item: List) => void;
+    Shop: List
 }
 
-const AddShopForm: React.FC<AddItemFromProps> = ({ onAdd }) => {
-    const [values, setValues] = useState<List>({
-        name: "",
-        address: {
-            street: "",
-            city: "",
-            state: "",
-            postalCode: "",
-            country: ""
-        },
-        owner: "",
-        email: "",
-        phone: NaN,
-        description: ""
-    });
-
+const UpdateShopForm: React.FC<AddItemFromProps> = ({ onUpdate: onUpdate, Shop }) => {
+    const [values, setValues] = useState(Shop);
+    
     const handelInputChange = (e: any) => {
         const { name, value } = e.target;
-        if (name && name.startsWith("Address.")) {
+        if (name && name.startsWith("address.")) {
             const addressProp = name.split(".")[1];
             setValues({
                 ...values,
@@ -96,7 +84,8 @@ const AddShopForm: React.FC<AddItemFromProps> = ({ onAdd }) => {
 
     const handelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        onAdd(values); // No need for curly braces around values
+        onUpdate(values); 
+        console.log(values);
         setValues({
             name: "",
             address: {
@@ -132,12 +121,12 @@ const AddShopForm: React.FC<AddItemFromProps> = ({ onAdd }) => {
                                 id="country"
                                 value={values.address.country}
                                 label="Country"
-                                name="Address.country"
+                                name="address.country"
                                 onChange={handelInputChange}
                                 sx={{ width: '80%' }}
                             >
                                 {countries.map(country => (
-                                    <MenuItem key={country.Country} value={country.Country}>{country.Country}</MenuItem>
+                                    <MenuItem key={country.country} value={country.country}>{country.country}</MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
@@ -150,11 +139,11 @@ const AddShopForm: React.FC<AddItemFromProps> = ({ onAdd }) => {
                                 id="state"
                                 value={values.address.state}
                                 label="State"
-                                name="Address.state"
+                                name="address.state"
                                 onChange={handelInputChange}
                                 sx={{ width: '80%' }}
                             >
-                                {countries.find(country => country.Country === values.address.country)?.states.map(state => (
+                                {countries.find(country => country.country === values.address.country)?.states.map(state => (
                                     <MenuItem key={state} value={state}>{state}</MenuItem>
                                 ))}
                             </Select>
@@ -168,22 +157,22 @@ const AddShopForm: React.FC<AddItemFromProps> = ({ onAdd }) => {
                                 id="city"
                                 value={values.address.city}
                                 label="City"
-                                name="Address.city"
+                                name="address.city"
                                 onChange={handelInputChange}
                                 sx={{ width: '80%' }}
                             >
-                                {countries.find(country => country.Country === values.address.country)?.cities[values.address.state]?.map(cities => (
+                                {countries.find(country => country.country === values.address.country)?.cities[values.address.state]?.map(cities => (
                                     <MenuItem key={cities} value={cities}>{cities}</MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
 
-                        <TextField variant="outlined" label="Street" name="Address.street" value={values.address.street} onChange={handelInputChange} />
-                        <TextField variant="outlined" label="Postal Code" name="Address.postalCode" value={values.address.postalCode} onChange={handelInputChange} />
+                        <TextField variant="outlined" label="Street" name="address.street" value={values.address.street} onChange={handelInputChange} />
+                        <TextField variant="outlined" label="Postal Code" name="address.postalCode" value={values.address.postalCode} onChange={handelInputChange} />
                     </Grid>
                     <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center" sx={{ minHeight: "25vh" }} >
                         <Button variant="contained" type="submit">
-                            Add Shop
+                            Update Shop
                         </Button>
                     </Grid>
                 </Grid>
@@ -193,4 +182,4 @@ const AddShopForm: React.FC<AddItemFromProps> = ({ onAdd }) => {
     )
 }
 
-export default AddShopForm;
+export default UpdateShopForm;

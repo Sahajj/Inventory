@@ -1,13 +1,14 @@
 import * as React from 'react';
 import MenuAppBar from '../Components/AppBar'
-import PageHeader from '../Components/PageHeader';
-import PeopleOutlineTwoToneIcon from '@mui/icons-material/PeopleOutlineTwoTone';
+// @ts-ignore
 import Button from '@mui/material/Button';
+// @ts-ignore
 import { Box, Modal } from '@mui/material';
 import { useState } from 'react';
 import ListOfShop from "../Components/List"
 import AddShopForm from '../Components/ShopForm';
 import { useNavigate } from 'react-router-dom';
+import UpdateShopForm from '../Components/UpdateShopForm';
 const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -44,10 +45,10 @@ const ShopDashboard: React.FC = () => {
             name: "Fashion Hub",
             address: {
                 street: "456 Fashion Ave",
-                city: "Metropolis",
-                state: "Fashion State",
+                city: "San Francisco",
+                state: "California",
                 postalCode: "54321",
-                country: "Fashionland"
+                country: "USA"
             },
             owner: "Alice Smith",
             email: "fashionhub@example.com",
@@ -59,10 +60,10 @@ const ShopDashboard: React.FC = () => {
             name: "Tech Haven",
             address: {
                 street: "789 Tech Blvd",
-                city: "Techville",
-                state: "Tech State",
+                city: "Munich City",
+                state: "Munich",
                 postalCode: "67890",
-                country: "Techland"
+                country: "Germany"
             },
             owner: "Bob Johnson",
             email: "techhaven@example.com",
@@ -74,10 +75,10 @@ const ShopDashboard: React.FC = () => {
             name: "Dummy Shop",
             address: {
                 street: "123 Main St",
-                city: "Dummyville",
-                state: "Dummy State",
+                city: "Bengaluru",
+                state: "Karnataka",
                 postalCode: "12345",
-                country: "Dummyland"
+                country: "India"
             },
             owner: "John Doe",
             email: "dummy@example.com",
@@ -96,9 +97,19 @@ const ShopDashboard: React.FC = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const handleEdit = (ListId?: number) => {
-        
-    }
+    const [editOpen, setEditOpen] = React.useState(false);
+    const [selectedShop, setSelectedShop] = React.useState<List | null>(null);
+
+    const handleEdit = (shop: List) => {
+        setSelectedShop(shop);
+        setEditOpen(true);
+    };
+
+    const handleUpdate = (updatedShop: List) => {
+        const updatedList = mainList.map(shop => (shop.id === updatedShop.id ? updatedShop : shop));
+        setMainList(updatedList);
+        setEditOpen(false);
+    };
 
     const handleDelete = (ListId?: number) => {
         const index = mainList.findIndex((list) => list.id === ListId);
@@ -111,8 +122,7 @@ const ShopDashboard: React.FC = () => {
     const handleNavigateToProducts = (ListId?: number) => {
         navigate(`/ProductDashboard/${ListId}`)
     }
-
-
+    
     return (
         <>
             <MenuAppBar value={"Shop List"} />
@@ -125,10 +135,14 @@ const ShopDashboard: React.FC = () => {
                         </Box>
                     </Modal >
                 </div>
-                <div>
-                    {/* <PageHeader title={mainList[0].name} icon={<PeopleOutlineTwoToneIcon fontSize="large" style={{ fill: '#3c44b1' }} />} description={mainList[0].description} /> */}
-                </div>
             </div>
+            <Modal open={editOpen} onClose={() => setEditOpen(false)} aria-labelledby="edit-modal-title" aria-describedby="edit-modal-description">
+                <Box sx={style}>
+                    {selectedShop && (
+                        <UpdateShopForm Shop={selectedShop} onUpdate={handleUpdate} />
+                    )}
+                </Box>
+            </Modal>
             <ListOfShop list={mainList}
                 onDelete={handleDelete}
                 onEdit={handleEdit}

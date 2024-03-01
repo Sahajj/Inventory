@@ -5,7 +5,7 @@ import LongMenu from '../Components/DotButton';
 interface ListOfItemsProps {
     list: List[];
     onDelete: (listId?: number) => void;
-    onEdit: (listId?: number) => void;
+    onEdit: (list : List) => void;
     onNavigateToProducts: (listId?: number) => void;
 }
 
@@ -14,8 +14,8 @@ const ListOfShop: React.FC<ListOfItemsProps> = ({ list, onDelete, onEdit, onNavi
         return <div>No Shop available</div>;
     }
 
-    const handelEdit = (ListId?: number) => {
-        onEdit(ListId);
+    const handelEdit = (List: List) => {
+        onEdit(List);
     }
 
     const handelDelete = (ListId?: number) => {
@@ -36,7 +36,7 @@ const ListOfShop: React.FC<ListOfItemsProps> = ({ list, onDelete, onEdit, onNavi
                     {list.map(shopList => <Shop 
                         key={shopList.id}
                         shopList={shopList}
-                        onEdit={() => handelEdit(shopList.id)}
+                        onEdit={() => handelEdit(shopList)}
                         onDelete={() => handelDelete(shopList.id)}
                         onNavigateToProducts={() => handelNavigateToProducts(shopList.id)}
                         />)}
