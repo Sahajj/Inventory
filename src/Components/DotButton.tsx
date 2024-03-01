@@ -4,20 +4,23 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-const options = [
-  'Edit',
-  'Delete Shop',
-  'Show inventory'
-];
+
+interface Props {
+  onEdit: () => void;
+  onDelete: () => void;
+  onNavigateToProducts: () => void;
+}
 
 const ITEM_HEIGHT = 48;
 
-export default function LongMenu() {
+const LongMenu: React.FC<Props> = ({ onEdit, onDelete, onNavigateToProducts }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -49,12 +52,12 @@ export default function LongMenu() {
           },
         }}
       >
-        {options.map((option) => (
-          <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
-            {option}
-          </MenuItem>
-        ))}
-      </Menu>
-    </div>
+      <MenuItem onClick={onEdit}>Edit</MenuItem>
+      <MenuItem onClick={onDelete}>Delete</MenuItem>
+      <MenuItem onClick={onNavigateToProducts}>Show Inventory</MenuItem>
+    </Menu>
+    </div >
   );
 }
+
+export default LongMenu;

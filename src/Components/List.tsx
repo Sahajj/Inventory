@@ -1,157 +1,52 @@
-import LongMenu from './DotButton'
 import * as React from 'react';
-interface List {
-    id: number,
-    name: string,
-    Address: {
-        street: string;
-        city: string;
-        state: string;
-        postalCode: string;
-        country: string;
-    },
-    owner: string,
-    email: string,
-    phone: number,
-    description?: string
+import { List } from "../Pages/ShopDashboard";
+import LongMenu from '../Components/DotButton';
+
+interface ListOfItemsProps {
+    list: List[];
+    onDelete: (listId?: number) => void;
+    onEdit: (listId?: number) => void;
+    onNavigateToProducts: (listId?: number) => void;
 }
 
-export default function ListOfItems({}) {
-    
-    
-    const Arr: List[] = [
-        {
-            id: 1,
-            name: "Fashion Hub",
-            Address: {
-                street: "456 Fashion Ave",
-                city: "Metropolis",
-                state: "Fashion State",
-                postalCode: "54321",
-                country: "Fashionland"
-            },
-            owner: "Alice Smith",
-            email: "fashionhub@example.com",
-            phone: 9876543210,
-            description: "Your one-stop shop for the latest fashion trends."
-        },
-        {
-            id: 2,
-            name: "Tech Haven",
-            Address: {
-                street: "789 Tech Blvd",
-                city: "Techville",
-                state: "Tech State",
-                postalCode: "67890",
-                country: "Techland"
-            },
-            owner: "Bob Johnson",
-            email: "techhaven@example.com",
-            phone: 1112223333,
-            description: "Your go-to destination for all things tech."
-        },
-        {
-            id: 3,
-            name: "Dummy Shop",
-            Address: {
-                street: "123 Main St",
-                city: "Dummyville",
-                state: "Dummy State",
-                postalCode: "12345",
-                country: "Dummyland"
-            },
-            owner: "John Doe",
-            email: "dummy@example.com",
-            phone: 1234567890,
-            description: "This is a dummy shop used for testing purposes."
-        },
-        {
-            id: 3,
-            name: "Dummy Shop",
-            Address: {
-                street: "123 Main St",
-                city: "Dummyville",
-                state: "Dummy State",
-                postalCode: "12345",
-                country: "Dummyland"
-            },
-            owner: "John Doe",
-            email: "dummy@example.com",
-            phone: 1234567890,
-            description: "This is a dummy shop used for testing purposes."
-        },
-        {
-            id: 3,
-            name: "Dummy Shop",
-            Address: {
-                street: "123 Main St",
-                city: "Dummyville",
-                state: "Dummy State",
-                postalCode: "12345",
-                country: "Dummyland"
-            },
-            owner: "John Doe",
-            email: "dummy@example.com",
-            phone: 1234567890,
-            description: "This is a dummy shop used for testing purposes."
-        },
-        {
-            id: 3,
-            name: "Dummy Shop",
-            Address: {
-                street: "123 Main St",
-                city: "Dummyville",
-                state: "Dummy State",
-                postalCode: "12345",
-                country: "Dummyland"
-            },
-            owner: "John Doe",
-            email: "dummy@example.com",
-            phone: 1234567890,
-            description: "This is a dummy shop used for testing purposes."
-        },
-        {
-            id: 3,
-            name: "Dummy Shop",
-            Address: {
-                street: "123 Main St",
-                city: "Dummyville",
-                state: "Dummy State",
-                postalCode: "12345",
-                country: "Dummyland"
-            },
-            owner: "John Doe",
-            email: "dummy@example.com",
-            phone: 1234567890,
-            description: "This is a dummy shop used for testing purposes."
-        },        {
-            id: 3,
-            name: "Dummy Shop",
-            Address: {
-                street: "123 Main St",
-                city: "Dummyville",
-                state: "Dummy State",
-                postalCode: "12345",
-                country: "Dummyland"
-            },
-            owner: "John Doe",
-            email: "dummy@example.com",
-            phone: 1234567890,
-            description: "This is a dummy shop used for testing purposes."
-        }
-    
-    ];
+const ListOfShop: React.FC<ListOfItemsProps> = ({ list, onDelete, onEdit, onNavigateToProducts }) => {
+    if (!list || list.length === 0) {
+        return <div>No Shop available</div>;
+    }
 
-    return <>
-    <div className="pl-4 pr-4 ">        
-            <div>
-                 {Arr.map(shopList => <Shop key={shopList.id} shopList={shopList} />)} 
+    const handelEdit = (ListId?: number) => {
+        onEdit(ListId);
+    }
+
+    const handelDelete = (ListId?: number) => {
+        onDelete(ListId);
+    }
+
+    const handelNavigateToProducts = (ListId?: number) => {
+        onNavigateToProducts(ListId);
+    }
+
+    React.useEffect(() => {
+    }, [list]);
+
+    return (
+        <>
+            <div className="pl-4 pr-4 ">
+                <div>
+                    {list.map(shopList => <Shop 
+                        key={shopList.id}
+                        shopList={shopList}
+                        onEdit={() => handelEdit(shopList.id)}
+                        onDelete={() => handelDelete(shopList.id)}
+                        onNavigateToProducts={() => handelNavigateToProducts(shopList.id)}
+                        />)}
+                </div>
             </div>
-        </div>
-    </>
+        </>
+    );
 }
 
-function Shop({ shopList }: { shopList: List }) {
+function Shop({ shopList, onEdit, onDelete, onNavigateToProducts }: { shopList: List; onEdit: () => void; onDelete: () => void; onNavigateToProducts: () => void; }) {
     return (
         <div className="flex justify-between p-4 border-2">
             <div className="flex">
@@ -171,10 +66,14 @@ function Shop({ shopList }: { shopList: List }) {
                 </div>
             </div>
             <div>
-            <LongMenu/>
+                {/* Assuming LongMenu component is used here */}
+                <LongMenu 
+                    onEdit={onEdit}
+                    onDelete={onDelete}
+                    onNavigateToProducts={onNavigateToProducts}/>
             </div>
-            
         </div>
     );
 }
 
+export default ListOfShop;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const NotFound: React.FC<{Props}> = (props: Props) => {
+const NotFound: React.FC = () => {
     return (
         <div className="page-404 bg-white py-10">
             <div className="container mx-auto">
@@ -16,7 +16,7 @@ const NotFound: React.FC<{Props}> = (props: Props) => {
                     <div className="contact_box_404 text-center">
                         <h3 className="text-6xl">Look like you're lost</h3>
                         <p className="text-lg">The page you are looking for is not available!</p>
-                        <a href="/dashboard" className="link_404 inline-block mt-8 px-6 py-3 bg-green-500 text-white font-bold rounded hover:bg-green-600 transition duration-300">Go to DashBoard</a>
+                        <a href="/ShopDashboard" className="link_404 inline-block mt-8 px-6 py-3 bg-green-500 text-white font-bold rounded hover:bg-green-600 transition duration-300">Go to DashBoard</a>
                     </div>
                 </div>
             </div>
